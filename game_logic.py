@@ -1,4 +1,5 @@
 import random
+import os
 from ascii_art import STAGES
 
 # List of secret words
@@ -17,6 +18,8 @@ def display_game_state(mistakes, secret_word, guessed_letters):
     :param guessed_letters: The letters the user has guessed so far.
     :return: None
     """
+    os.system('clear')
+    print("Welcome to Snowman Meltdown!")
     print(STAGES[mistakes])
 
     word_to_show = "_" * len(secret_word)
@@ -35,7 +38,6 @@ def play_game():
     :return: None
     """
     secret_word = get_random_word()
-    print("Welcome to Snowman Meltdown!")
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
     # TODO: Build your game loop here.
@@ -46,15 +48,28 @@ def play_game():
         display_game_state(mistakes, secret_word, guessed_letters)
         guess = "1"
         while not guess.isalpha() or len(guess) != 1 or guess in guessed_letters:
-            guess = input("Guess a letter: ").lower()
+            guess = input("\nGuess a letter: ").lower()
         print("You guessed:", guess)
         guessed_letters.add(guess[0].lower())
         letters_not_guessed = sum(1 for c in secret_word if c not in guessed_letters)
         if letters_not_guessed == 0:
-            print("You have saved the snowman! Congratulations!")
+            print("\nYou have saved the snowman! Congratulations!")
             break
         if guess not in secret_word:
             mistakes += 1
         if mistakes > 3:
-            print("The spring has come to the snowman and it's water is now pushing daisies!")
+            print("\nThe spring has come to the snowman and it's water is now pushing daisies!")
+            print(f"The secret word was {secret_word}")
+            break
+
+def play_games():
+    """
+    Launch the snowman game.
+    Ask the user if they want to play the game again. Continue until they say no.
+    :return:
+    """
+    while True:
+        play_game()
+        user_input = input("\nWould you like play again? (Y)es or (N)o").lower() or "no"
+        if user_input[0] != "y":
             break
