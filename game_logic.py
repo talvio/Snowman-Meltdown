@@ -70,6 +70,6 @@ def play_games():
     """
     while True:
         play_game()
-        user_input = input("\nWould you like play again? (Y)es or (N)o").lower() or "no"
+        user_input = input("\nWould you like play again? (Y)es or (N)o: ").lower() or "no"
         if user_input[0] != "y":
             break
